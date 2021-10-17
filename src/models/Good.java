@@ -8,6 +8,9 @@ public class Good {
 	private int stock;
 	
 	
+	public Good() {
+		
+	}
 	
 	public Good(int id, String name, String description, double price, int stock) {
 		

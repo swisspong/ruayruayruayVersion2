@@ -23,11 +23,21 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Main.Main;
+import constants.AdminGoodConstants;
+import constants.CustomerConstants;
+import constants.InvoiceConstants;
+import constants.SupplierAdminConstants;
+import constants.SupplierGoodConstants;
+import pages.AdminPage;
+import pages.CustomerPage;
+import pages.InvoicePage;
+import pages.SupplierAdminPage;
+import pages.SupplierGoodPage;
 
 public class Menu extends JPanel{
-	private JFrame frame;
 	private int mousePressX;
 	private int mousePressY;
+	public Main mainSwing;
 	public String selected = "Admin Good";
 	public MenuItem menuItemArr[] = {
 			new MenuItem("Admin Good","/boxes.png",this),
@@ -37,8 +47,9 @@ public class Menu extends JPanel{
 			new MenuItem("Invoice","/invoice.png",this),
 			new MenuItem("Exit","/logout.png",this),
 	};
-	
-	public Menu() {
+	public PanelRounded pCard;
+	public Menu(Main mainSwing) {
+		this.mainSwing = mainSwing;
 		setOpaque(false);
 		setLayout(new FlowLayout(0,0,0));
 		JLabel head = new JLabel("RuayRuayRuay");
@@ -58,7 +69,15 @@ public class Menu extends JPanel{
 		for(MenuItem i:menuItemArr) {
 			add(i);
 		}
-	
+		
+		
+		mainSwing.mainPanel.add(new AdminPage(),AdminGoodConstants.PAGE_NAME);
+		mainSwing.mainPanel.add(new CustomerPage(),CustomerConstants.PAGE_NAME);
+		mainSwing.mainPanel.add(new SupplierAdminPage(),SupplierAdminConstants.PAGE_NAME);
+		mainSwing.mainPanel.add(new SupplierGoodPage(),SupplierGoodConstants.PAGE_NAME);
+		mainSwing.mainPanel.add(new InvoicePage(),InvoiceConstants.PAGE_NAME);
+		pCard = mainSwing.mainPanel; 
+		
 		reactUX();
 		
 		
@@ -68,8 +87,7 @@ public class Menu extends JPanel{
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//		GradientPaint gd = new GradientPaint(0, 0, Color.decode("#000000"), 0,getHeight(),Color.decode("#333333"));
-//		g2.setPaint(gd);
+
 		g2.setColor(Color.decode("#1F1F1F"));
 		g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
 		g2.fillRect(getWidth()-20, 0, getWidth(), getHeight());
@@ -86,13 +104,11 @@ public class Menu extends JPanel{
 		addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				frame.setLocation(e.getXOnScreen()-mousePressX, e.getYOnScreen()-mousePressY);
+				mainSwing.frame.setLocation(e.getXOnScreen()-mousePressX, e.getYOnScreen()-mousePressY);
 			}
 		});
 		
 	}
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-	
+
+
 }

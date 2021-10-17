@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
+import constants.ColorConstants;
+
 public class TextFieldStyle extends JPanel {
 	
 	private JLabel lbName;
@@ -25,7 +27,7 @@ public class TextFieldStyle extends JPanel {
 		
 		tf = new JTextField();
 		
-		tf.setBackground(Color.decode("#1E1E1E"));
+		tf.setBackground(ColorConstants.PRIMARY);
 		tf.setForeground(new java.awt.Color(255, 255, 255));
 		tf.setPreferredSize(new Dimension(width,20));
 		tf.setBorder(null);

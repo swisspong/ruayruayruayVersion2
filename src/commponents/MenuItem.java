@@ -1,6 +1,8 @@
 package commponents;
 
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.FlowLayout;
@@ -13,6 +15,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import constants.InvoiceConstants;
+import pages.AdminPage;
+import pages.CustomerPage;
+import pages.SupplierGoodPage;
+import pages.InvoicePage;
 
 public class MenuItem extends JPanel{
 	
@@ -91,8 +99,40 @@ public class MenuItem extends JPanel{
 							i.exited();
 						}
 					}
+					
 					if(menu.selected.equalsIgnoreCase("exit")) {
 						 System.exit(0);
+					}else {
+						CardLayout cardLayout = (CardLayout)menu.pCard.getLayout();
+					
+						
+						for (Component comp : menu.pCard.getComponents()) {
+//						    if (comp.isVisible() == true) {
+							
+						       if(comp instanceof CustomerPage) {
+						    	   System.out.println("CustomerPPPPPP");
+						    	   ((CustomerPage) comp).revalidate();
+						    	   ((CustomerPage) comp).repaint();
+						       }else if(comp instanceof SupplierGoodPage) {
+						
+						    	   ((SupplierGoodPage) comp).removeAll();						    	   
+						    	   ((SupplierGoodPage) comp).fetchSupplier();
+						    	   ((SupplierGoodPage) comp).init();
+						       }else if(comp instanceof InvoicePage) {
+						    	   System.out.println("InvoicePagePPPPPP");
+						    	   ((InvoicePage) comp).removeAll();
+						    	   ((InvoicePage) comp).fetchSupplier();
+						    	   ((InvoicePage) comp).init();
+						    	   
+						    	 
+						       }else if(comp instanceof AdminPage) {
+						    	   ((AdminPage) comp).removeAll();
+						    	   ((AdminPage) comp).fetchData();
+						    	   ((AdminPage) comp).init();
+						       }
+//						    }
+						}
+						cardLayout.show(menu.pCard,menu.selected);
 					}
 				}
 			}

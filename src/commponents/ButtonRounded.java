@@ -13,7 +13,8 @@ import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
 public class ButtonRounded extends JButton{
-	public ButtonRounded() {
+	public ButtonRounded(String name) {
+		setText(name);
 		setContentAreaFilled(false);
 		setFocusPainted(false);
 		setBackground(Color.decode("#966bca"));

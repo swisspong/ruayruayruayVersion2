@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.sun.source.tree.WhileLoopTree;
+
 import DB.ConnectionFactory;
 
 import models.Good;
@@ -14,7 +16,8 @@ import models.Good;
 
 
 public class GoodDAO {
-	public void addGood(Good good) {
+	
+	public void addGood(Good good)  {
 		System.out.println("Add Good");
 		try {
 			String insertSql = "INSERT INTO goods (name,price,description,stock) VALUES ('"+good.getName()+"',"+good.getPrice()+",'"+good.getDescription()+"',"+good.getStock()+");"; 
@@ -36,6 +39,38 @@ public class GoodDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+	}
+	public Good findById(int goodId) {
+		Good good =null;
+		try {
+			String insertSql = "SELECT * FROM GOODS WHERE ID="+goodId; 
+			System.out.println("insertSql:" + insertSql);
+
+			ConnectionFactory connDB = new ConnectionFactory();
+			Connection con = connDB.getConnection();
+
+			Statement stmnt = null;
+			if (con != null) {
+				stmnt = con.createStatement();
+				ResultSet rs =stmnt.executeQuery(insertSql);
+				if(rs.next()) {
+					int id = rs.getInt("id");
+					String name = rs.getString("name");
+					double price = rs.getDouble("price");
+					String desc = rs.getString("description");
+					int stock = rs.getInt("stock");
+					good = new Good(id, name, desc, price, stock);
+				}
+				stmnt.close();
+				con.close();
+				
+			}
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return good;
 	}
 	public Vector<Good>  viewGoods() {
 		System.out.println("View Good");
@@ -83,6 +118,30 @@ public class GoodDAO {
 			String updateSql = "update goods set name='"+good.getName()+"',price="
 			+good.getPrice()+",stock="+good.getStock()+",description='"
 					+good.getDescription()+"' where id ="+good.getId();
+			System.out.println("updateSql:" + updateSql);
+			
+			ConnectionFactory connDB = new ConnectionFactory();
+			Connection con = connDB.getConnection();
+			
+			Statement stmnt = null;
+			if (con != null) {
+				stmnt = con.createStatement();
+				stmnt.executeUpdate(updateSql);
+				stmnt.close();
+				con.close();
+				System.out.println("Good updated successfully.");
+			}
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	public void updateStock(Good good) {
+		System.out.println("Edit Good");
+		try {
+			
+			String updateSql = "update goods set stock="+good.getStock()+" where id ="+good.getId();
 			System.out.println("updateSql:" + updateSql);
 			
 			ConnectionFactory connDB = new ConnectionFactory();
